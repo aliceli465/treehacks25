@@ -1,0 +1,328 @@
+/* App.css */
+.App {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f7f7f7;
+  font-family: "'Roboto Mono'", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+button {
+  font-family: "'Roboto Mono'", sans-serif; /* Same here, use 'Nunito' or 'Quicksand' */
+}
+
+.app-header {
+  font-size: 2.5rem;
+  color: #2a2a2a;
+  margin-bottom: 30px;
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
+}
+
+.profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ProfileCard.css */
+.profile-card {
+  width: 320px;
+  background-color: #ffffff; /* White background for purity */
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+}
+
+.profile-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+/* GitHub logo */
+.github-logo {
+  width: 30px;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  opacity: 0.8;
+  transition: opacity 0.3s;
+}
+
+.github-logo:hover {
+  opacity: 1;
+}
+
+.avatar img {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border: 5px solid #4a4a4a; /* Romantic muted tone for border */
+  margin-bottom: 15px;
+  transition: transform 0.3s ease;
+}
+
+.avatar img:hover {
+  transform: scale(1.1);
+}
+
+.name {
+  font-size: 1.6rem;
+  color: #2a2a2a; /* Deep charcoal for elegance */
+  margin: 5px 0;
+  font-family: "Montserrat", sans-serif; /* Sleek heading font */
+}
+
+.username {
+  font-size: 1rem;
+  color: #7a7a7a; /* Light gray for softness */
+  margin-bottom: 10px;
+}
+
+.bio {
+  font-size: 1rem;
+  color: #7a7a7a; /* Soft gray with italic style for romance */
+  font-style: italic;
+  margin-bottom: 15px;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.stats p {
+  font-size: 1rem;
+  color: #7a7a7a; /* Soft, romantic gray */
+}
+
+.repositories {
+  text-align: center;
+}
+
+.repositories h3 {
+  font-size: 1.2rem;
+  color: #2a2a2a; /* Deep tone for titles */
+  margin-bottom: 10px;
+  font-family: "Montserrat", sans-serif; /* Modern heading font */
+}
+
+.repositories ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.repositories ul li {
+  margin-bottom: 5px;
+}
+
+.repositories ul li a {
+  color: #4a4a4a; /* Dark gray for text */
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.repositories ul li a:hover {
+  color: #ff6f61; /* Soft romantic color for hover */
+  text-decoration: underline;
+}
+
+.repo-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
+
+.repo-card {
+  position: relative;
+  background: #fff;
+  border: 2px solid #574f53;
+  border-radius: 10px;
+  padding: 15px;
+  width: 250px;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.repo-card:hover {
+  transform: translateY(-5px);
+}
+
+.repo-name {
+  font-weight: bold;
+  color: #574f53;
+  text-decoration: none;
+}
+
+.repo-name:hover {
+  text-decoration: underline;
+}
+
+.repo-description {
+  font-size: 14px;
+  color: #333;
+  margin-top: 5px;
+}
+
+.tool-emoji {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  font-size: 18px;
+  background: white;
+  border-radius: 50%;
+  padding: 3px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+.icon {
+  font-size: 20px; /* Adjust icon size */
+  color: #0073e6;
+  margin-right: 8px;
+}
+.icon2 {
+  font-size: 10px;
+  margin-right: 8px;
+}
+
+.followers,
+.following {
+  font-size: 1rem;
+  color: #444;
+}
+
+.commit-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr); /* 12 columns for 12 months */
+  gap: 10px; /* Consistent spacing */
+  justify-content: center;
+  align-items: center;
+}
+
+.commit-month {
+  display: grid;
+  grid-template-rows: repeat(4, 1fr); /* 4 rows for 4 weeks */
+  gap: 5px; /* Even spacing */
+  justify-items: center;
+}
+
+.commit-box {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.commit-box:hover {
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+/*home*/
+.navbar {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.navbar a {
+  color: gray;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.navbar a:hover {
+  color: red;
+}
+
+.title {
+  font-size: 4rem;
+  font-weight: bold;
+}
+
+.motto {
+  color: gray;
+  font-style: italic;
+  margin-top: 10px;
+}
+
+.logo-container {
+  position: relative;
+  margin-top: 20px;
+}
+
+.github-logo {
+  width: 120px;
+  height: 120px;
+  animation: pulse 2s infinite;
+}
+
+.heart {
+  position: absolute;
+  font-size: 2rem;
+  color: red;
+  animation: pulse 1.5s infinite alternate;
+}
+
+.heart-top {
+  top: -20px;
+  left: -20px;
+}
+
+.heart-bottom {
+  bottom: -20px;
+  right: -20px;
+}
+
+.enter-button {
+  margin-top: 20px;
+  padding: 12px 24px;
+  background-color: red;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.enter-button:hover {
+  background-color: darkred;
+  transform: scale(1.05);
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+}
