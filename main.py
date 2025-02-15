@@ -95,8 +95,37 @@ def get_collaboration_data(username):
         "reviewed_prs": reviewed_prs_count
     }
 
+def download_profile_picture(username, save_dir="profile_pictures"):
+    """
+    Downloads the GitHub profile picture of a user and saves it to the given directory.
+    
+    Args:
+        username (str): GitHub username.
+        save_dir (str): Directory to save the profile picture.
+
+    Returns:
+        str: Path to the saved image.
+    """
+    os.makedirs(save_dir, exist_ok=True)  # Ensure the directory exists
+
+    save_path = os.path.join(save_dir, f"{username}.jpg")
+    url = f"https://api.github.com/users/{username}"
+    
+    response = requests.get(url, headers=HEADERS).json()
+    if "avatar_url" in response:
+        avatar_url = response["avatar_url"]
+        img_data = requests.get(avatar_url).content
+        
+        with open(save_path, "wb") as file:
+            file.write(img_data)
+
+        return save_path  # Return the saved image path
+
+    return None  # Return None if download fails
+
+
 # === 5. Profile Picture Analysis ===
-def interpret_profile_picture(username, save_dir="treehacks25/profile_pictures"):
+def interpret_profile_picture(username, save_dir="profile_pictures"):
     image_path = os.path.join(save_dir, f"{username}.jpg")
 
     if not os.path.exists(image_path):
@@ -104,7 +133,7 @@ def interpret_profile_picture(username, save_dir="treehacks25/profile_pictures")
 
     prompt = (
         "Given this Github profile picture, interpret what it is in 3 detailed sentences, "
-        "as if to someone who is visually impaired but can see."
+        "as if to someone who is visually impaired but can see. At the end, include a line break, and then a zingy, witty, specific software engineering roast of the profile picture. Make it Gen-Z core. No emojis, though, just a single sentence."
     )
 
     client = openai.OpenAI(api_key=OPENAI_API_KEY)
@@ -293,6 +322,7 @@ def compute_similarity(user_scores, target_username):
     return similarities
 
 
+
 # === MAIN FUNCTION ===
 def collect_github_data(usernames):
     output = {}
@@ -303,8 +333,11 @@ def collect_github_data(usernames):
         commit_history = get_commit_history(username, repos)
         collaboration_data = get_collaboration_data(username)
 
-        # Download and analyze profile picture
+        download_profile_picture(username)
+
+        # Download and analyze profile picture + the roast
         profile_description = interpret_profile_picture(username)
+        profile_roast = extract_last_sentence(profile_description)
 
         # Prepare user data for scoring
         user_data = {
@@ -322,36 +355,66 @@ def collect_github_data(usernames):
         output[username] = {
             "username": username,
             "profile_description": profile_description,
-            "github_score": github_score
+            "github_score": github_score,
+            "profile_picture_roast": profile_roast
         }
 
         final_score = extract_github_scores(github_score)
         output[username]["final_score"] = final_score
     return output
 
-def collect_github_data_only_vector(usernames):
+def extract_last_sentence(text):
+    """
+    Extracts the last sentence from a given text.
+    This is used to get the software engineering/GitHub-related roast.
+    """
+    sentences = re.split(r'(?<=[.!?])\s+', text.strip())  # Split by sentence-ending punctuation
+    if sentences:
+        return sentences[-1]  # Return last sentence (the roast)
+    return "No roast found."
+
+def collect_github_data_only_vector(longOutput):
     output = {}
-    longOutput = collect_github_data(usernames)
     for username in usernames:
         output[username] = longOutput[username]["final_score"]
+    return output
+
+def collect_github_roasts_only(longInput):
+    """
+    Extracts profile picture roasts for a list of users.
+    
+    Args:
+        longInput (dict): longInput, obviously
+    
+    Returns:
+        dict: Dictionary where the key is the username and the value is the profile picture roast.
+    """
+    output = {}
+
+    for username in usernames:
+        output[username] = longOutput[username]["profile_picture_roast"]  # Extract roast only
+
     return output
 
 
 # Run data collection
 if __name__ == "__main__":
-    # EXAMPLE: gives 6 number long vector for all users
-    usernames = ["aliceli465", "alorsahoo"]  # Example users
-    vectorList = collect_github_data_only_vector(usernames)
+    usernames = ["alorsahoo", "aliceli465"]  # Example users
+    longOutput = collect_github_data(usernames)
+
+    # EXAMPLE 1: gives 6 number long vector for all users
+    vectorList = collect_github_data_only_vector(longOutput)
     print(vectorList)
 
-    # EXAMPLE: cosine similarity
-
+    # EXAMPLE 2: cosine similarity
     # Step 2: Compute similarity for a target user
     target_user = "aliceli465"
     similarity_results = compute_similarity(vectorList, target_user)
-
     print(f"\nTop matches for {target_user}:")
     for username, score in similarity_results:
         print(f"{username}: {score:.4f}")
-
+    
+    #EXAMPLE 3: Get profile picture roasts for all users
+    roastList = collect_github_roasts_only(usernames)
+    print(roastList)
     
