@@ -7,14 +7,24 @@ import {
   Github,
   Terminal,
   Code,
+  Cpu,
 } from "lucide-react";
+import { getAuth, signInWithPopup, GithubAuthProvider } from "firebase/auth";
 
 const Homepage = ({ setSwipe }) => {
+  const auth = getAuth();
+  const provider = new GithubAuthProvider();
   const [showContent, setShowContent] = useState(false);
 
-  const onClick = () => {
-    setSwipe(true);
+  const handleLogin = async () => {
+    try {
+      await signInWithPopup(auth, provider);
+      setSwipe(true);
+    } catch (error) {
+      console.error("GitHub login failed:", error);
+    }
   };
+
   useEffect(() => {
     setTimeout(() => setShowContent(true), 3000);
   }, []);
@@ -133,7 +143,7 @@ const Homepage = ({ setSwipe }) => {
           fontFamily: "'Roboto Mono', monospace",
         }}
       >
-        how bout you git some bitches
+        the premier dating app for CS majors
       </motion.p>
       <div
         style={{
@@ -236,7 +246,7 @@ const Homepage = ({ setSwipe }) => {
 
           {/* Enter Now Button */}
           <motion.a
-            onClick={onClick}
+            onClick={handleLogin}
             whileHover={{ scale: 1.1, backgroundColor: "#238636" }} // Hover effect
             transition={{ type: "spring", stiffness: 300 }}
             style={{
@@ -254,7 +264,7 @@ const Homepage = ({ setSwipe }) => {
               cursor: "pointer",
             }}
           >
-            Enter Now 🚀
+            Login with Github 🚀
           </motion.a>
         </motion.div>
       )}
@@ -430,7 +440,7 @@ const Homepage = ({ setSwipe }) => {
                 ease: "easeInOut",
               }}
             >
-              <Github
+              <Cpu
                 style={{ width: "32px", height: "32px", color: "#58a6ff" }}
               />
             </motion.div>
