@@ -10,16 +10,17 @@ import {
   Cpu,
 } from "lucide-react";
 import { getAuth, signInWithPopup, GithubAuthProvider } from "firebase/auth";
-
-const Homepage = ({ setSwipe }) => {
+import { useNavigate } from "react-router-dom";
+const Homepage = () => {
   const auth = getAuth();
   const provider = new GithubAuthProvider();
   const [showContent, setShowContent] = useState(false);
+  const navigate = new useNavigate();
 
   const handleLogin = async () => {
     try {
       await signInWithPopup(auth, provider);
-      setSwipe(true);
+      navigate("/profiles");
     } catch (error) {
       console.error("GitHub login failed:", error);
     }

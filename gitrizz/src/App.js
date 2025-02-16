@@ -1,22 +1,20 @@
 import React, { useState } from "react";
-import ProfileCard from "./components/profile";
 import "./App.css"; // Optional: Add any additional global styles
 import Home from "./components/home";
 import SwipeableProfileCards from "./components/profiles";
-import Login from "./components/login";
-const App = () => {
-  const [swipe, setSwipe] = useState(false);
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import UserProfile from "./components/userProfile";
+import { auth } from "./firebase";
 
+const App = () => {
   return (
-    <div className="app">
-      {swipe ? (
-        <div className="profile-container">
-          <SwipeableProfileCards />
-        </div>
-      ) : (
-        <Home setSwipe={setSwipe} />
-      )}
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/profiles" element={<SwipeableProfileCards />} />
+        <Route path="/user-profile" element={<UserProfile />} />
+      </Routes>
+    </Router>
   );
 };
 

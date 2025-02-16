@@ -3,8 +3,25 @@ import { FaGithub } from "react-icons/fa";
 import ProfileCard from "./profile";
 import { Heart, X } from "lucide-react";
 import FloatingWidgets from "./widgets";
+import { useNavigate } from "react-router-dom";
+import { FaUserCircle } from "react-icons/fa";
 
 const styles = {
+  profileIcon: {
+    position: "absolute",
+    top: "10px",
+    right: "20px",
+    cursor: "pointer",
+    marginBottom: "50px",
+    display: "inline-block",
+    margin: "10px",
+    border: "none",
+    background: `url('/alice.jpg') center/cover no-repeat`,
+    width: "60px",
+    height: "60px",
+    borderRadius: "50%",
+    transition: "transform 0.2s ease-in-out",
+  },
   container: {
     position: "relative",
     width: "100%",
@@ -58,13 +75,64 @@ const styles = {
   },
 };
 
-//ex widget data
+const funnyCommitMessages = [
+  "oh hell na",
+  "what am i doing",
+  "plz work",
+  "commit out of pure desperation",
+  "i have no idea why this works",
+  "fixed one bug, added five more",
+  "this commit is cursed",
+  "yolo push",
+  "let’s pretend this never happened",
+  "refactored… again",
+  "probably breaks everything",
+  "added TODOs, feel productive now",
+  "debugging nightmare begins",
+  "hotfix for hotfix",
+  "deleting code is scary",
+  "might work on Their machine",
+  "temporary fix (forever)",
+  "not proud of this one",
+  "pray before merging",
+  "senior devs will judge me for this",
+];
+
+const funnyRoasts = [
+  "Their repo is basically an abandoned graveyard of half-baked ideas.",
+  "Their commit history looks like a cry for help.",
+  "I've seen cleaner diffs in spaghetti code competitions.",
+  "Their GitHub is 90% forks and 10% regret.",
+  "Their contribution graph is an accurate representation of procrastination.",
+  "They write more TODOs than actual code.",
+  "Their most starred repo is an empty README.md. Impressive.",
+  "Their bio says ‘Software Engineer,’ but Their code says ‘Under Construction.’",
+  "They treat version control like a diary, and it shows.",
+  "Their code quality is directly proportional to the number of ‘pls work’ commits.",
+  "Their debugging strategy is just pushing to main and praying.",
+  "They have more WIP branches than finished projects.",
+  "Their repo names are as chaotic as Their life choices.",
+  "Their commit messages tell a tragic story of struggle and despair.",
+  "Their most used Git command is `git reset --hard`.",
+  "Their README is just a single ‘¯\\_(ツ)_/¯’.",
+  "Half Their repos are abandoned after the first commit.",
+  "Their PR reviews are just people asking ‘why?.’",
+  "Their GitHub activity drops to zero when the semester ends.",
+  "Their entire repo is just debugging prints and dreams.",
+];
+
 const generateWidgetData = () => ({
-  commitMessages: ["oh hell na", "what am i doing", "plz work"],
+  commitMessages: Array.from(
+    { length: 3 },
+    () =>
+      funnyCommitMessages[
+        Math.floor(Math.random() * funnyCommitMessages.length)
+      ]
+  ),
   linkedIn: "https://linkedin.com/in/example-user",
   contributions: Math.floor(Math.random() * 500),
   similarity: Math.random().toFixed(2),
-  summary: "she looks like she doesn't debug her code",
+  summary: funnyRoasts[Math.floor(Math.random() * funnyRoasts.length)],
 });
 
 const SwipeableProfileCards = () => {
@@ -73,6 +141,11 @@ const SwipeableProfileCards = () => {
   const [animation, setAnimation] = useState(null);
   const [widgetVisible, setWidgetVisible] = useState(true);
   const [widgetData, setWidgetData] = useState(generateWidgetData());
+
+  const navigate = useNavigate();
+  const handleProfileClick = () => {
+    navigate("/user-profile");
+  };
 
   useEffect(() => {
     fetch("/profiles.json")
@@ -162,55 +235,57 @@ const SwipeableProfileCards = () => {
   };
 
   return (
-    <div style={styles.container}>
-      <button
-        onClick={() => handleSwipe("left")}
-        style={{ ...styles.actionButton, ...styles.dislikeButton }}
-      >
-        <X size={32} />
-      </button>
+    <>
+      <button style={styles.profileIcon} onClick={handleProfileClick}></button>
+      <div style={styles.container} className="animated-bg">
+        <button
+          onClick={() => handleSwipe("left")}
+          style={{ ...styles.actionButton, ...styles.dislikeButton }}
+        >
+          <X size={32} />
+        </button>
 
-      <div style={styles.cardContainer}>
-        <div
-          id="hearts-container"
-          style={{
-            position: "fixed",
-            left: 0,
-            top: 0,
-            right: 0,
-            bottom: 0,
-            pointerEvents: "none",
-            overflow: "hidden",
-            zIndex: 1000,
-          }}
-        />
+        <div style={styles.cardContainer}>
+          <div
+            id="hearts-container"
+            style={{
+              position: "fixed",
+              left: 0,
+              top: 0,
+              right: 0,
+              bottom: 0,
+              pointerEvents: "none",
+              overflow: "hidden",
+              zIndex: 1000,
+            }}
+          />
 
-        {profiles.map((profile, index) => {
-          const cardStyle = getCardStyle(index);
-          if (!cardStyle) return null;
+          {profiles.map((profile, index) => {
+            const cardStyle = getCardStyle(index);
+            if (!cardStyle) return null;
 
-          return (
-            <>
-              {index === currentIndex && (
-                <FloatingWidgets {...widgetData} visible={widgetVisible} />
-              )}
-              <div key={index} style={cardStyle}>
-                <ProfileCard {...profile} />
-              </div>
-            </>
-          );
-        })}
-      </div>
+            return (
+              <>
+                {index === currentIndex && (
+                  <FloatingWidgets {...widgetData} visible={widgetVisible} />
+                )}
+                <div key={index} style={cardStyle}>
+                  <ProfileCard {...profile} />
+                </div>
+              </>
+            );
+          })}
+        </div>
 
-      <button
-        onClick={() => handleSwipe("right")}
-        style={{ ...styles.actionButton, ...styles.likeButton }}
-      >
-        <Heart size={32} />
-      </button>
+        <button
+          onClick={() => handleSwipe("right")}
+          style={{ ...styles.actionButton, ...styles.likeButton }}
+        >
+          <Heart size={32} />
+        </button>
 
-      <style>
-        {`
+        <style>
+          {`
             .floating-heart {
               position: absolute;
               background: #ff4444;
@@ -230,8 +305,9 @@ const SwipeableProfileCards = () => {
               filter: brightness(1.1);
             }
           `}
-      </style>
-    </div>
+        </style>
+      </div>
+    </>
   );
 };
 

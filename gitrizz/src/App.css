@@ -32,13 +32,14 @@ button {
 
 /* ProfileCard.css */
 .profile-card {
-  width: 320px;
-  background-color: #ffffff; /* White background for purity */
+  width: 380px;
+  background-color: #ffffff;
   border-radius: 20px;
   padding: 25px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   text-align: center;
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+  animation: shadowGlow 3s ease-in-out infinite;
 }
 
 .profile-card:hover {
@@ -352,6 +353,7 @@ button {
   border-radius: 12px;
   font-size: 14px;
   pointer-events: auto;
+  z-index: 9999;
 
   /* Glassmorphism effect */
   backdrop-filter: blur(8px);
@@ -365,12 +367,12 @@ button {
 
 /* Base positions */
 .widget.top-left {
-  top: 20px;
+  top: 120px;
   left: 20px;
 }
 
 .widget.top-right {
-  top: 20px;
+  top: 120px;
   right: 20px;
 }
 
@@ -572,4 +574,26 @@ button {
   background: rgba(0, 0, 0, 0.9);
   color: white;
   border-radius: 6px;
+}
+
+/*swiping stuff*/
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes shadowGlow {
+  0% {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+  50% {
+    box-shadow: 0 10px 30px rgba(1, 27, 66, 0.4); /* Change to a blue glow or any color */
+  }
+  100% {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
 }
