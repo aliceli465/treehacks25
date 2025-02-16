@@ -1,50 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaGithub } from "react-icons/fa";
 import ProfileCard from "./profile";
 import { Heart, X } from "lucide-react";
-//sample data
-const months = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
-];
-const sampleCommitData = months.flatMap((month, monthIndex) =>
-  Array.from({ length: 4 }, (_, weekIndex) => ({
-    month,
-    week: `Week ${weekIndex + 1}`,
-    commits: Math.floor(Math.random() * 10), // Random commits between 0-9
-  }))
-);
-const profile1 = {
-  imageURL: "/roblox.png",
-  name: "Octocat",
-  username: "octocat",
-  bio: "A friendly octopus. I love coding and open source.",
-  followers: 5000,
-  following: 100,
-  repositories: [
-    {
-      name: "Hello-World",
-      url: "https://github.com/octocat/Hello-World",
-      description: "A simple repository to explore Git and GitHub features.",
-    },
-    {
-      name: "Spoon-Knife",
-      url: "https://github.com/octocat/Spoon-Knife",
-      description: "A collection of tools for sharing your favorite recipes.",
-    },
-  ],
-  commitData: sampleCommitData,
-};
+import FloatingWidgets from "./widgets";
 
 const styles = {
   container: {
@@ -83,11 +41,13 @@ const styles = {
     left: "-80px",
     backgroundColor: "#ff4444",
     color: "white",
+    marginTop: "80px",
   },
   likeButton: {
     right: "-80px",
     backgroundColor: "#44cc44",
     color: "white",
+    marginTop: "80px",
   },
   cardWrapper: {
     position: "absolute",
@@ -98,60 +58,59 @@ const styles = {
   },
 };
 
+//ex widget data
+const generateWidgetData = () => ({
+  commitMessages: ["oh hell na", "what am i doing", "plz work"],
+  linkedIn: "https://linkedin.com/in/example-user",
+  contributions: Math.floor(Math.random() * 500),
+  similarity: Math.random().toFixed(2),
+  summary: "she looks like she doesn't debug her code",
+});
+
 const SwipeableProfileCards = () => {
-  const [profiles, setProfiles] = useState([
-    profile1,
-    profile1,
-    profile1,
-    profile1,
-  ]);
+  const [profiles, setProfiles] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [animation, setAnimation] = useState(null);
+  const [widgetVisible, setWidgetVisible] = useState(true);
+  const [widgetData, setWidgetData] = useState(generateWidgetData());
 
-  const handleLike = () => {
+  useEffect(() => {
+    fetch("/profiles.json")
+      .then((response) => response.json())
+      .then((data) => setProfiles(data))
+      .catch((error) => console.error("Error loading profiles:", error));
+  }, []);
+
+  const handleSwipe = (direction) => {
     if (currentIndex >= profiles.length) return;
 
-    setAnimation("slide-right");
-    createHearts();
+    setWidgetVisible(false); // Hide widgets
+    setAnimation(direction === "right" ? "slide-right" : "slide-left");
+
+    if (direction === "right") createHearts();
 
     setTimeout(() => {
       setCurrentIndex((prev) => prev + 1);
       setAnimation(null);
-    }, 500);
-  };
+      setWidgetData(generateWidgetData());
 
-  const handleDislike = () => {
-    if (currentIndex >= profiles.length) return;
-
-    setAnimation("slide-left");
-
-    setTimeout(() => {
-      setCurrentIndex((prev) => prev + 1);
-      setAnimation(null);
+      setTimeout(() => setWidgetVisible(true), 500); // Slowly reappear widgets
     }, 500);
   };
 
   const createHearts = () => {
-    // Create more hearts with wider distribution
-    Array.from({ length: 15 }).forEach((_, i) => {
+    Array.from({ length: 15 }).forEach(() => {
       const heart = document.createElement("div");
       heart.className = "floating-heart";
-
-      // Randomize starting position across the whole container
       heart.style.left = `${Math.random() * 100}%`;
       heart.style.top = `${Math.random() * 100}%`;
-
-      // Randomize size
-      const size = Math.random() * 15 + 15; // 15-30px
+      const size = Math.random() * 15 + 15;
       heart.style.width = `${size}px`;
       heart.style.height = `${size}px`;
-
-      // Randomize animation delay and duration
       heart.style.animationDelay = `${Math.random() * 0.5}s`;
-      heart.style.animationDuration = `${Math.random() * 1 + 1}s`; // 1-2s
+      heart.style.animationDuration = `${Math.random() * 1 + 1}s`;
 
       document.getElementById("hearts-container").appendChild(heart);
-
       setTimeout(() => heart.remove(), 2000);
     });
   };
@@ -188,7 +147,7 @@ const SwipeableProfileCards = () => {
     if (index === currentIndex + 1) {
       return {
         ...baseStyle,
-        transform: "translateX(0) scale(0.95) translateY(0)",
+        transform: "translateX(0) scale(0.95)",
         opacity: 0,
         zIndex: 2,
       };
@@ -196,7 +155,7 @@ const SwipeableProfileCards = () => {
 
     return {
       ...baseStyle,
-      transform: "translateX(0) scale(0.9) translateY(0)",
+      transform: "translateX(0) scale(0.9)",
       opacity: 0,
       zIndex: 1,
     };
@@ -205,7 +164,7 @@ const SwipeableProfileCards = () => {
   return (
     <div style={styles.container}>
       <button
-        onClick={handleDislike}
+        onClick={() => handleSwipe("left")}
         style={{ ...styles.actionButton, ...styles.dislikeButton }}
       >
         <X size={32} />
@@ -231,15 +190,20 @@ const SwipeableProfileCards = () => {
           if (!cardStyle) return null;
 
           return (
-            <div key={index} style={cardStyle}>
-              <ProfileCard {...profile} />
-            </div>
+            <>
+              {index === currentIndex && (
+                <FloatingWidgets {...widgetData} visible={widgetVisible} />
+              )}
+              <div key={index} style={cardStyle}>
+                <ProfileCard {...profile} />
+              </div>
+            </>
           );
         })}
       </div>
 
       <button
-        onClick={handleLike}
+        onClick={() => handleSwipe("right")}
         style={{ ...styles.actionButton, ...styles.likeButton }}
       >
         <Heart size={32} />
@@ -255,22 +219,10 @@ const SwipeableProfileCards = () => {
             }
   
             @keyframes float-heart {
-              0% {
-                transform: scale(0) rotate(0deg);
-                opacity: 0;
-              }
-              15% {
-                transform: scale(1.2) rotate(-20deg);
-                opacity: 0.9;
-              }
-              30% {
-                transform: scale(1) rotate(10deg);
-                opacity: 0.8;
-              }
-              100% {
-                transform: scale(0.8) rotate(30deg) translate(100px, -100px);
-                opacity: 0;
-              }
+              0% { transform: scale(0) rotate(0deg); opacity: 0; }
+              15% { transform: scale(1.2) rotate(-20deg); opacity: 0.9; }
+              30% { transform: scale(1) rotate(10deg); opacity: 0.8; }
+              100% { transform: scale(0.8) rotate(30deg) translate(100px, -100px); opacity: 0; }
             }
   
             button:hover {
