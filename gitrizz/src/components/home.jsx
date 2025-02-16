@@ -1,14 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import {
-  GitPullRequest,
-  Code2,
-  UserRoundPen,
-  Github,
-  Terminal,
-  Code,
-  Cpu,
-} from "lucide-react";
+import { GitPullRequest, UserRoundPen, Github, Cpu } from "lucide-react";
 import { getAuth, signInWithPopup, GithubAuthProvider } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 const Homepage = () => {

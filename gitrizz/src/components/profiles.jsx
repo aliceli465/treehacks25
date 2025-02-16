@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { FaGithub } from "react-icons/fa";
 import ProfileCard from "./profile";
 import { Heart, X } from "lucide-react";
 import FloatingWidgets from "./widgets";
 import { useNavigate } from "react-router-dom";
-import { FaUserCircle } from "react-icons/fa";
 
 const styles = {
   profileIcon: {

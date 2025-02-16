@@ -42,11 +42,6 @@ button {
   animation: shadowGlow 3s ease-in-out infinite;
 }
 
-.profile-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-}
-
 .card-header {
   position: relative;
   margin-bottom: 20px;
