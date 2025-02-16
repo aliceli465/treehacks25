@@ -361,6 +361,7 @@ def collect_github_data(usernames):
 
         final_score = extract_github_scores(github_score)
         output[username]["final_score"] = final_score
+
     return output
 
 def extract_last_sentence(text):
@@ -373,10 +374,10 @@ def extract_last_sentence(text):
         return sentences[-1]  # Return last sentence (the roast)
     return "No roast found."
 
-def collect_github_data_only_vector(longOutput):
+def collect_github_data_only_vector(longInput):
     output = {}
-    for username in usernames:
-        output[username] = longOutput[username]["final_score"]
+    for username in longInput:
+        output[username] = longInput[username]["final_score"]
     return output
 
 def collect_github_roasts_only(longInput):
@@ -391,8 +392,8 @@ def collect_github_roasts_only(longInput):
     """
     output = {}
 
-    for username in usernames:
-        output[username] = longOutput[username]["profile_picture_roast"]  # Extract roast only
+    for username in longInput:
+        output[username] = longInput[username]["profile_picture_roast"]  # Extract roast only
 
     return output
 
@@ -400,14 +401,13 @@ def collect_github_roasts_only(longInput):
 # Run data collection
 if __name__ == "__main__":
     usernames = ["alorsahoo", "aliceli465"]  # Example users
-    longOutput = collect_github_data(usernames)
+    longInput = collect_github_data(usernames)
 
     # EXAMPLE 1: gives 6 number long vector for all users
-    vectorList = collect_github_data_only_vector(longOutput)
+    vectorList = collect_github_data_only_vector(longInput)
     print(vectorList)
 
     # EXAMPLE 2: cosine similarity
-    # Step 2: Compute similarity for a target user
     target_user = "aliceli465"
     similarity_results = compute_similarity(vectorList, target_user)
     print(f"\nTop matches for {target_user}:")
@@ -415,6 +415,6 @@ if __name__ == "__main__":
         print(f"{username}: {score:.4f}")
     
     #EXAMPLE 3: Get profile picture roasts for all users
-    roastList = collect_github_roasts_only(usernames)
+    roastList = collect_github_roasts_only(longInput)
     print(roastList)
     
