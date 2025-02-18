@@ -1,4 +1,270 @@
-[
+[  {
+  "imageURL": "/alice.jpg",
+  "name": "Alice Li",
+  "username": "aliceli465",
+  "bio": "UIUC CS '26",
+  "followers": 4,
+  "following": 0,
+  "repositories": [
+    {
+      "name": "MHacks24",
+      "url": "https://github.com/aliceli465/MHacks24",
+      "description": "Project by Alice Li, Advait Patel, Sean Jasin, and Nathan Hu"
+    },
+    {
+      "name": "dSATGrade",
+      "url": "https://github.com/aliceli465/dSATGrade",
+      "description": "A quick way for Prep with Jen tutors to quickly grade their student answers!"
+    },
+    {
+      "name": "claid-points",
+      "url": "https://github.com/aliceli465/claid-points",
+      "description": "points api for claid.org"
+    }
+  ],
+  "commitData": [
+    {
+      "month": "Jan",
+      "week": "Week 1",
+      "commits": 5
+    },
+    {
+      "month": "Jan",
+      "week": "Week 2",
+      "commits": 6
+    },
+    {
+      "month": "Jan",
+      "week": "Week 3",
+      "commits": 1
+    },
+    {
+      "month": "Jan",
+      "week": "Week 4",
+      "commits": 7
+    },
+    {
+      "month": "Feb",
+      "week": "Week 1",
+      "commits": 5
+    },
+    {
+      "month": "Feb",
+      "week": "Week 2",
+      "commits": 2
+    },
+    {
+      "month": "Feb",
+      "week": "Week 3",
+      "commits": 9
+    },
+    {
+      "month": "Feb",
+      "week": "Week 4",
+      "commits": 4
+    },
+    {
+      "month": "Mar",
+      "week": "Week 1",
+      "commits": 1
+    },
+    {
+      "month": "Mar",
+      "week": "Week 2",
+      "commits": 4
+    },
+    {
+      "month": "Mar",
+      "week": "Week 3",
+      "commits": 3
+    },
+    {
+      "month": "Mar",
+      "week": "Week 4",
+      "commits": 8
+    },
+    {
+      "month": "Apr",
+      "week": "Week 1",
+      "commits": 6
+    },
+    {
+      "month": "Apr",
+      "week": "Week 2",
+      "commits": 1
+    },
+    {
+      "month": "Apr",
+      "week": "Week 3",
+      "commits": 9
+    },
+    {
+      "month": "Apr",
+      "week": "Week 4",
+      "commits": 0
+    },
+    {
+      "month": "May",
+      "week": "Week 1",
+      "commits": 2
+    },
+    {
+      "month": "May",
+      "week": "Week 2",
+      "commits": 1
+    },
+    {
+      "month": "May",
+      "week": "Week 3",
+      "commits": 2
+    },
+    {
+      "month": "May",
+      "week": "Week 4",
+      "commits": 4
+    },
+    {
+      "month": "Jun",
+      "week": "Week 1",
+      "commits": 3
+    },
+    {
+      "month": "Jun",
+      "week": "Week 2",
+      "commits": 1
+    },
+    {
+      "month": "Jun",
+      "week": "Week 3",
+      "commits": 1
+    },
+    {
+      "month": "Jun",
+      "week": "Week 4",
+      "commits": 1
+    },
+    {
+      "month": "Jul",
+      "week": "Week 1",
+      "commits": 6
+    },
+    {
+      "month": "Jul",
+      "week": "Week 2",
+      "commits": 8
+    },
+    {
+      "month": "Jul",
+      "week": "Week 3",
+      "commits": 7
+    },
+    {
+      "month": "Jul",
+      "week": "Week 4",
+      "commits": 1
+    },
+    {
+      "month": "Aug",
+      "week": "Week 1",
+      "commits": 0
+    },
+    {
+      "month": "Aug",
+      "week": "Week 2",
+      "commits": 6
+    },
+    {
+      "month": "Aug",
+      "week": "Week 3",
+      "commits": 2
+    },
+    {
+      "month": "Aug",
+      "week": "Week 4",
+      "commits": 2
+    },
+    {
+      "month": "Sep",
+      "week": "Week 1",
+      "commits": 10
+    },
+    {
+      "month": "Sep",
+      "week": "Week 2",
+      "commits": 6
+    },
+    {
+      "month": "Sep",
+      "week": "Week 3",
+      "commits": 1
+    },
+    {
+      "month": "Sep",
+      "week": "Week 4",
+      "commits": 5
+    },
+    {
+      "month": "Oct",
+      "week": "Week 1",
+      "commits": 8
+    },
+    {
+      "month": "Oct",
+      "week": "Week 2",
+      "commits": 4
+    },
+    {
+      "month": "Oct",
+      "week": "Week 3",
+      "commits": 8
+    },
+    {
+      "month": "Oct",
+      "week": "Week 4",
+      "commits": 1
+    },
+    {
+      "month": "Nov",
+      "week": "Week 1",
+      "commits": 5
+    },
+    {
+      "month": "Nov",
+      "week": "Week 2",
+      "commits": 3
+    },
+    {
+      "month": "Nov",
+      "week": "Week 3",
+      "commits": 6
+    },
+    {
+      "month": "Nov",
+      "week": "Week 4",
+      "commits": 1
+    },
+    {
+      "month": "Dec",
+      "week": "Week 1",
+      "commits": 1
+    },
+    {
+      "month": "Dec",
+      "week": "Week 2",
+      "commits": 6
+    },
+    {
+      "month": "Dec",
+      "week": "Week 3",
+      "commits": 4
+    },
+    {
+      "month": "Dec",
+      "week": "Week 4",
+      "commits": 9
+    }
+  ]
+},
   {
     "imageURL": "https://robohash.org/devwizard.png?size=200x200",
     "name": "devwizard",

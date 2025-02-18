@@ -31,7 +31,7 @@ const FloatingWidgets = ({
 
       <div className="widget bottom-left my-anchor-element">
         <div className="similarity-score">
-          💡 Similarity Score: {similarity}%
+          💡 Compatability Score: {similarity}
           <Info size={16} className="info-icon" />
         </div>
         <Tooltip

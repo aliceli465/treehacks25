@@ -13,6 +13,7 @@ load_dotenv()
 
 GITHUB_TOKEN = os.getenv("GITHUB_ACCESS_TOKEN")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
 # GitHub API request headers
 HEADERS = {"Authorization": f"token {GITHUB_TOKEN}"} if GITHUB_TOKEN else {}
@@ -154,6 +155,7 @@ def interpret_profile_picture(username, save_dir="profile_pictures"):
 
     return response.choices[0].message.content
 
+
 # === 6. GitHub Profile Scoring ===
 def score_github_profile(user_data):
     prompt = (
@@ -237,9 +239,9 @@ def score_github_profile(user_data):
         "NOTE: the list should be at the very end of the output to facilitate extraction with basic Python code."
     )
 
-    client = openai.OpenAI(api_key=OPENAI_API_KEY)
+    client = openai.OpenAI(base_url="https://api.groq.com/openai/v1", api_key=GROQ_API_KEY)
     response = client.chat.completions.create(
-        model="gpt-4o-mini",
+        model="llama-3.3-70b-versatile",
         messages=[
             {"role": "system", "content": "You are an AI trained to analyze GitHub profiles."},
             {"role": "user", "content": f"{prompt}\n\nGitHub Profile Data:\n{user_data}"}
@@ -397,7 +399,6 @@ def collect_github_roasts_only(longInput):
 
     return output
 
-
 # Run data collection
 if __name__ == "__main__":
     usernames = ["alorsahoo", "aliceli465"]  # Example users
@@ -417,4 +418,3 @@ if __name__ == "__main__":
     #EXAMPLE 3: Get profile picture roasts for all users
     roastList = collect_github_roasts_only(longInput)
     print(roastList)
-    
